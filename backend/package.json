@@ -1,0 +1,14 @@
+{"name": "api",
+  "version": "0.0.1",
+  "description": "API Running Node.js and Express.js on Docker",
+  "main": "api.js",
+  "scripts": {
+    "start": "node api.js"
+  },
+  "dependencies": {
+    "express": "^4.17.2",
+    "cors": "^2.8.5"
+  },
+  "author": "Lisandro Guerra",
+  "license": "MIT"
+}

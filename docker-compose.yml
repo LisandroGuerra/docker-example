@@ -1,0 +1,32 @@
+version: "3.9"
+services:
+    frontend:
+        build:
+            context: ./frontend
+        # ports:
+        #     - "3000:3000"
+        expose:
+            - 3000
+        container_name: frontend
+        depends_on:
+            - proxy
+            - backend
+
+    backend:
+        build:
+            context: ./backend
+        ports:
+            - "5000:5000"
+        # expose:
+        #     - 5000
+        container_name: backend
+        depends_on:
+            - proxy
+
+    proxy:
+        restart: always
+        build:
+            context: ./proxy
+        container_name: proxy
+        ports:
+            - "8080:80"
