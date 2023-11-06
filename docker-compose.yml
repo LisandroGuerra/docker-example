@@ -3,13 +3,15 @@ services:
     frontend:
         build:
             context: ./frontend
+        # volumes:
+        #     - ./frontend/public:containerPath:ro
+        #     - ./frontend/src:containerPath:ro
         # ports:
         #     - "3000:3000"
         expose:
             - 3000
         container_name: frontend
         depends_on:
-            - proxy
             - backend
 
     backend:
@@ -21,12 +23,21 @@ services:
         #     - 5000
         container_name: backend
         depends_on:
-            - proxy
+            - db
 
     proxy:
         restart: always
         build:
             context: ./proxy
-        container_name: proxy
+        container_name: proxy_nginx
         ports:
             - "8080:80"
+        depends_on:
+            - frontend
+            - backend
+
+    db:
+    image: mariadb
+    restart: always
+    env_file:
+      - ./.env
