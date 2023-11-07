@@ -22,8 +22,8 @@ services:
         # expose:
         #     - 5000
         container_name: backend
-        depends_on:
-            - db
+        # depends_on:
+        #     - db
 
     proxy:
         restart: always
@@ -35,9 +35,12 @@ services:
         depends_on:
             - frontend
             - backend
-
     db:
-    image: mariadb
-    restart: always
-    env_file:
-      - ./.env
+        build:
+            context: ./db
+        ports:
+            - "3306:3306"
+        volumes:
+            - ./db/nfs:/var/lib/mysql
+        env_file:
+            - ./.env
